@@ -1,48 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
+﻿using System.Linq;
 using HarmonyLib;
-using JetBrains.Annotations;
 using RimWorld;
 using Verse;
 
-namespace WoodIsNaturalForTrees
+namespace WoodIsNaturalForTrees;
+
+internal static class HarmonyPatches
 {
-    internal static class HarmonyPatches
+    [HarmonyPatch(typeof(MeditationUtility), nameof(MeditationUtility.CountsAsArtificialBuilding), typeof(Thing))]
+    private static class PatchCountsAsArtificialBuildingThing
     {
-        [HarmonyPatch(typeof(MeditationUtility), nameof(MeditationUtility.CountsAsArtificialBuilding), typeof(Thing))]
-        private static class PatchCountsAsArtificialBuildingThing
+        private static void Postfix(Thing t, ref bool __result)
         {
-            [UsedImplicitly]
-            private static void Postfix(Thing t, ref bool __result)
-            {
-                if (!__result || 
-                    t.Stuff?.stuffProps?.categories == null || 
-                    !WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Any()) 
-                    return;
+            if (!__result ||
+                t.Stuff?.stuffProps?.categories == null ||
+                !WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Any())
+                return;
 
-                if (t.Stuff.stuffProps.categories.All(c => WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Contains(c)))
-                    __result = false;
-            }
+            if (t.Stuff.stuffProps.categories.All(c => WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Contains(c)))
+                __result = false;
         }
+    }
 
-        [HarmonyPatch(typeof(MeditationUtility), nameof(MeditationUtility.CountsAsArtificialBuilding), typeof(ThingDef), typeof(Faction))]
-        private static class PatchCountsAsArtificialBuildingDef
+    [HarmonyPatch(typeof(MeditationUtility), nameof(MeditationUtility.CountsAsArtificialBuilding), typeof(ThingDef), typeof(Faction))]
+    private static class PatchCountsAsArtificialBuildingDef
+    {
+        private static void Postfix(ThingDef def, ref bool __result)
         {
-            [UsedImplicitly]
-            private static void Postfix(ThingDef def, ref bool __result)
-            {
-                if (!__result || 
-                    Find.DesignatorManager.SelectedDesignator is not Designator_Place place ||
-                    place.StuffDef?.stuffProps?.categories == null ||
-                    !WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Any()) 
-                    return;
+            if (!__result ||
+                Find.DesignatorManager.SelectedDesignator is not Designator_Place place ||
+                place.StuffDef?.stuffProps?.categories == null ||
+                !WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Any())
+                return;
 
-                if (place.StuffDef.stuffProps.categories.All(c => WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Contains(c)))
-                    __result = false;
-            }
+            if (place.StuffDef.stuffProps.categories.All(c => WoodIsNaturalForTreesMod.settings.stuffMadeFrom.Contains(c)))
+                __result = false;
         }
     }
 }
