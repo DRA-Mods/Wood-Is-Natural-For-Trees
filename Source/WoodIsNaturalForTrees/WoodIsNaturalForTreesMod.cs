@@ -26,5 +26,5 @@ public class WoodIsNaturalForTreesMod : Mod
 
     public override void DoSettingsWindowContents(Rect inRect) => settings.DoSettingsWindowContents(inRect);
 
-    public override string SettingsCategory() => "Wood is Natural for Trees";
+    public override string SettingsCategory() => "Wood Is Natural (For Trees)";
 }

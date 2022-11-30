@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Wood is Natural for Trees")]
-[assembly: AssemblyDescription("Makes Anima and Gauranlen trees, as well as nature shrines, consider any structure made out of wood as natura.")]
+[assembly: AssemblyTitle("Wood Is Natural (For Trees)")]
+[assembly: AssemblyDescription("Makes Anima/Gauranlen/Pollux trees, as well as nature shrines, consider any structure made out of wood as natural.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dra")]
-[assembly: AssemblyProduct("Wood is Natural for Trees")]
+[assembly: AssemblyProduct("Wood Is Natural (For Trees)")]
 [assembly: AssemblyCopyright("Copyright © Dra 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
